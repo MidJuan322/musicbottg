@@ -30,25 +30,23 @@ def default_commands(message: Message):
 
 @bot.message_handler(content_types=['text'])
 def youtube_download(message):
-    try:
-        if message.text.startswith('https://www.youtube.com') or ('https://youtu.be/'):
-            url = message.text
-            title = YouTube(url).title
-            bot.send_message(message.chat.id, f'Обрабатываю песню: {title}\n\n'
-                                              f'Несколько мгновений и она будет отправлена вам!')
-            duration = YouTube(url).length
-            if duration < 1800:
-                abr_ = YouTube(url).streams.get_audio_only().abr
-                dw = YouTube(url).streams.get_audio_only().download()
-                statinfo = os.path.getsize(dw)
-                bot.send_audio(message.chat.id, audio=open(f'{dw}', 'rb'), title=title,
-                               caption=f'\n🎧 {str(datetime.timedelta(seconds=duration))} | {convert_size(statinfo)} | {abr_}',
-                               duration=duration)
-                os.remove(f'{dw}')
-            else:
-                bot.send_message(message.chat.id, 'Размер аудио слишком велик\n'
-                                                  'Аудиофайл превышает лимит по времени в 30 минут')
-    except:
-        bot.send_message(message.chat.id, 'Что-то пошло не так')
+    if message.text.startswith('https://www.youtube.com') or ('https://youtu.be/'):
+        url = message.text
+        title = YouTube(url).title
+        bot.send_message(message.chat.id, f'Обрабатываю песню: {title}\n\n'
+                                          f'Несколько мгновений и она будет отправлена вам!')
+        duration = YouTube(url).length
+        if duration < 1800:
+            abr_ = YouTube(url).streams.get_audio_only().abr
+            dw = YouTube(url).streams.get_audio_only().download()
+            statinfo = os.path.getsize(dw)
+            bot.send_audio(message.chat.id, audio=open(f'{dw}', 'rb'), title=title,
+                           caption=f'\n🎧 {str(datetime.timedelta(seconds=duration))} | {convert_size(statinfo)} | {abr_}',
+                           duration=duration)
+            os.remove(f'{dw}')
+        else:
+            bot.send_message(message.chat.id, 'Размер аудио слишком велик\n'
+                                              'Аудиофайл превышает лимит по времени в 30 минут')
+
 
 bot.polling(none_stop=True)
