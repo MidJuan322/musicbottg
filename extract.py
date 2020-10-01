@@ -341,3 +341,4 @@ def apply_descrambler(stream_data: Dict, key: str) -> None:
         ]
 
     logger.debug("applying descrambler")
+
