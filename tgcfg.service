@@ -6,9 +6,9 @@ After=network.tarrget
 User=serega
 Group=serega
 
-WorkingDirectory=/home/serega/telegbot/
-Environment="PYTHONPATH=/home/serega/telegbot"
-ExecStart=/home/serega/telegbot/.venv/bin/python  /home/serega/telegbot/bot.py
+WorkingDirectory=/home/serega/musicbottg/
+Environment="PYTHONPATH=/home/serega/musicbottg"
+ExecStart=/home/serega/musicbottg/.venv/bin/python  /home/serega/musicbottg/bot.py
 
 [Install]
 WantedBy=multi-user.target
